@@ -38,6 +38,14 @@ module.exports = {
 		const filterRole = interaction.options.getRole("filter");
 		const isTest = interaction.options.getBoolean("test");
 
+		const content =
+			"📢各位親愛的領主們，《世紀帝國M》上線即將一週年啦🎉\n\n首先，當然是感謝各位領主這近一年的陪伴和指教，\n團隊也在積極收集大家的意見，盼望能創造更好的“世紀帝國”⚔\n\n在一起共襄盛舉前，我們準備了一份調查問卷，想更了解領主們的心聲💭\n還請領主們在收到問卷後撥空填寫，一起為更好、更強大的帝國而努力！💪\n" +
+			hyperlink(
+				"https://forms.gle/L9oXScsYHvKmK7xs6",
+				"https://forms.gle/L9oXScsYHvKmK7xs6",
+			) +
+			"\n\n《世紀帝國M》營運團隊 敬上";
+
 		const embed = new EmbedBuilder()
 			.setTitle("📢各位親愛的領主們，《世紀帝國M》上線即將一週年啦🎉")
 			.setDescription(
@@ -52,7 +60,7 @@ module.exports = {
 			.setTimestamp();
 
 		if (isTest && interaction.user.id == process.env.MY_ID) {
-			await interaction.user.send({ embeds: [embed] });
+			await interaction.user.send({ content: content /* embeds: [embed] */ });
 			await interaction.editReply({
 				content: "Test message sent to yourself.",
 			});
@@ -76,7 +84,7 @@ module.exports = {
 		let sentCount = 0;
 		for (const member of membersWithRole.values()) {
 			try {
-				await member.send({ embeds: [embed] });
+				await member.send({ content: content /* embeds: [embed] */ });
 				sentCount++;
 			} catch (err) {
 				// Ignore DM failures (user may have DMs disabled)
