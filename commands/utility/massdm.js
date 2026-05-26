@@ -5,6 +5,7 @@ const {
 	PermissionFlagsBits,
 	InteractionContextType,
 	Colors,
+	hyperlink,
 } = require("discord.js");
 
 module.exports = {
@@ -17,13 +18,13 @@ module.exports = {
 			option
 				.setName("test")
 				.setDescription("Send the message to yourself only")
-				.setRequired(true)
+				.setRequired(true),
 		)
 		.addRoleOption((option) =>
 			option
 				.setName("filter")
 				.setDescription("Role to filter members by")
-				.setRequired(true)
+				.setRequired(true),
 		)
 		.setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
 		.setContexts(InteractionContextType.Guild),
@@ -38,8 +39,15 @@ module.exports = {
 		const isTest = interaction.options.getBoolean("test");
 
 		const embed = new EmbedBuilder()
-			.setTitle("Important Message")
-			.setDescription("This is a mass DM sent to all members of the server.")
+			.setTitle("📢各位親愛的領主們，《世紀帝國M》上線即將一週年啦🎉")
+			.setDescription(
+				"首先，當然是感謝各位領主這近一年的陪伴和指教，\n團隊也在積極收集大家的意見，盼望能創造更好的“世紀帝國”⚔\n\n在一起共襄盛舉前，我們準備了一份調查問卷，想更了解領主們的心聲💭\n還請領主們在收到問卷後撥空填寫，一起為更好、更強大的帝國而努力！💪\n" +
+					hyperlink(
+						"https://forms.gle/L9oXScsYHvKmK7xs6",
+						"https://forms.gle/L9oXScsYHvKmK7xs6",
+					) +
+					"\n\n《世紀帝國M》營運團隊 敬上",
+			)
 			.setColor(Colors.Default)
 			.setTimestamp();
 
@@ -62,7 +70,7 @@ module.exports = {
 		await interaction.guild.members.fetch();
 
 		const membersWithRole = interaction.guild.members.cache.filter(
-			(member) => member.roles.cache.has(filterRole.id) && !member.user.bot
+			(member) => member.roles.cache.has(filterRole.id) && !member.user.bot,
 		);
 
 		let sentCount = 0;
